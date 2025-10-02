@@ -1,101 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Top Nav Dashboard</title>
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f5f5f5;
-    }
-
-    .navbar {
-      background-color: #34495e;
-      color: #fff;
-      padding: 15px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .navbar .logo {
-      font-size: 20px;
-      font-weight: bold;
-    }
-
-    .navbar .nav-links a {
-      color: #ecf0f1;
-      margin-left: 20px;
-      text-decoration: none;
-      font-size: 14px;
-    }
-
-    .navbar .nav-links a:hover {
-      color: #1abc9c;
-    }
-
-    .dashboard-content {
-      padding: 20px;
-    }
-
-    .card {
-      background-color: white;
-      padding: 20px;
-      margin-bottom: 20px;
-      border-radius: 6px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    }
-
-    .card h3 {
-      margin-bottom: 10px;
-    }
-
-    @media (max-width: 600px) {
-      .navbar {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .navbar .nav-links {
-        margin-top: 10px;
-      }
-
-      .navbar .nav-links a {
-        margin-left: 0;
-        margin-right: 10px;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ $title ?? 'JobVerse' }}</title>
+    @vite('resources/css/app.css')
 </head>
-<body>
+<body class="bg-gray-950 text-gray-100 min-h-screen font-inter antialiased">
+    <div class="min-h-screen flex flex-col">
 
-  <div class="navbar">
-    <div class="logo"> {{ $heading }}</div>
-    <div class="nav-links">
-    <div class="hidden md:block">
-<div class="ml-10 flex items-baseline space-x-4">
-<!-- inside layout.blade.php's nav section -->
-<x-nav-link href="/" :active="request()->is('/')">Home</x-nav-link>
-<x-nav-link href="/jobs" :active="request()->is('jobs')">Jobs</x-nav-link>
-</div>
-</div>
+        <!-- Navbar -->
+        <nav class="bg-gray-900/80 backdrop-blur border-b border-gray-800 px-6 py-4 flex justify-between items-center">
+            <a href="/" class="text-cyan-400 font-semibold text-lg tracking-tight">
+                JobVerse
+            </a>
+            <div class="space-x-6">
+                <a href="/" class="text-gray-300 hover:text-white transition">Home</a>
+                <a href="/jobs" class="text-gray-300 hover:text-white transition">Jobs</a>
+            </div>
+        </nav>
+
+        <!-- Page Content -->
+        <main class="flex-1 max-w-6xl mx-auto w-full px-6 py-10">
+            {{ $slot }}
+        </main>
+
+        <!-- Footer -->
+        <footer class="px-6 py-8 text-center text-gray-500 border-t border-gray-800 text-sm">
+            &copy; {{ date('Y') }} JobVerse. All rights reserved.
+        </footer>
     </div>
-  </div>
-
-  <div class="dashboard-content">
-    <div class="card">
-      {{ $slot }}
-    </div>
-
-  
-  </div>
-
 </body>
 </html>

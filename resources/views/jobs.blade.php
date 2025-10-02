@@ -1,31 +1,54 @@
-<x-layout>
-    <x-slot:heading>
-        Jobs Page
-    </x-slot:heading>
+{{-- resources/views/jobs.blade.php --}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Listings</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-gray-100 font-sans">
 
-    <!-- Jobs list -->
-    <ul>
-        @foreach ($jobs as $job)
-            <li class="mb-4 border border-gray-200 rounded-lg">
-                <a href="/jobs/{{ $job->id }}" class="block px-4 py-6">
-                    <div class="font-bold text-blue-500 text-sm">
-                        {{ $job->employer->name }}
-                    </div>
-                    <div>
-                        <strong class="text-laracasts">{{ $job->title }}:</strong>
-                        Pays {{ $job->salary }} per year.
-                    </div>
-                </a>
+    {{-- Header --}}
+    <header class="bg-gray-800 shadow-md py-6">
+        <div class="container mx-auto flex justify-between items-center px-6">
+            <h1 class="text-3xl font-bold text-cyan-400 tracking-wide">Job Listings</h1>
+            <nav>
+                <a href="/" class="text-gray-300 hover:text-cyan-400 px-4">Home</a>
+                <a href="/jobs" class="text-gray-300 hover:text-cyan-400 px-4">Jobs</a>
+            </nav>
+        </div>
+    </header>
 
-                <!-- Tags -->
-                <div class="px-4 py-4">
-                    @foreach($job->tags as $tag)
-                        <span class="bg-gray-200 text-gray-700 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded-full">
-                            {{ $tag->name }}
-                        </span>
-                    @endforeach
+    {{-- Jobs Grid --}}
+    <main class="container mx-auto px-6 py-8">
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            @foreach ($jobs as $job)
+                <div class="bg-gray-800 rounded-xl shadow-lg p-6 hover:shadow-cyan-500/50 transition duration-300">
+                    <h2 class="text-xl font-bold text-cyan-400 mb-2">{{ $job->title }}</h2>
+                    <p class="text-gray-300 mb-2">Employer: <span class="text-green-400 font-semibold">{{ $job->employer->name }}</span></p>
+                    
+                    {{-- Tags --}}
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        @foreach ($job->tags as $tag)
+                            <span class="bg-cyan-500/20 text-cyan-300 px-3 py-1 rounded-full text-sm">{{ $tag->name }}</span>
+                        @endforeach
+                    </div>
+
+                    {{-- Post Date & Details Link --}}
+                    <p class="text-gray-400 text-sm mb-3">Posted: {{ $job->created_at->format('M d, Y') }}</p>
+                    <a href="/jobs/{{ $job->id }}" class="inline-block bg-cyan-400 text-gray-900 px-4 py-2 rounded-lg font-semibold hover:bg-cyan-500 transition duration-300">
+                        View Details
+                    </a>
                 </div>
-            </li>
-        @endforeach
-    </ul>
-</x-layout>
+            @endforeach
+        </div>
+
+        {{-- Pagination --}}
+        <div class="mt-10 flex justify-center">
+            {{ $jobs->links('vendor.pagination.tailwind') }}
+        </div>
+    </main>
+
+</body>
+</html>
