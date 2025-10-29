@@ -9,18 +9,17 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    // in ..._create_job_tag_table.php
     public function up(): void
-    {
-      Schema::create('job_tag', function (Blueprint $table) {
-    $table->id();
-    $table->foreignId('job_id')->constrained('job_listings')->cascadeOnDelete();
-    $table->foreignId('tag_id')->constrained()->cascadeOnDelete();
-    $table->timestamps();
-});
+{
+    Schema::create('job_tag', function (Blueprint $table) {
+        $table->id();
+        $table->foreignId('job_id')->constrained('job_listings')->onDelete('cascade');
+        $table->foreignId('tag_id')->constrained()->onDelete('cascade');
+        $table->timestamps();
+    });
+}
 
 
-    }
     /**
      * Reverse the migrations.
      */

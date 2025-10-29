@@ -9,23 +9,22 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    // in ..._create_job_listings_table.php
 public function up(): void
 {
-Schema::create('job_listings', function (Blueprint $table) {
-$table->id();
-$table->foreignId('employer_id');
-$table->string('title');
-$table->string('salary');
-$table->timestamps();
-});
+    Schema::create('employers', function (Blueprint $table) {
+        $table->id();
+        $table->string('name');   // make sure this line exists
+        $table->timestamps();
+    });
 }
+
+
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('job_listings');
+        Schema::dropIfExists('employers');
     }
 };

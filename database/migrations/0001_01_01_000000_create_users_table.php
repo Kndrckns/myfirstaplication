@@ -13,14 +13,7 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-
-            // ✅ Split name into first_name + last_name
-            $table->string('first_name')->nullable();
-            $table->string('last_name')->nullable();
-
-            // keep original full name for compatibility
-            $table->string('name')->nullable();
-
+            $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

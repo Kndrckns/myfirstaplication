@@ -3,32 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $title ?? 'JobVerse' }}</title>
-    @vite('resources/css/app.css')
+    <title>{{ $heading ?? 'My Site' }}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-950 text-gray-100 min-h-screen font-inter antialiased">
-    <div class="min-h-screen flex flex-col">
+<body class="bg-gray-100 text-gray-900">
 
-        <!-- Navbar -->
-        <nav class="bg-gray-900/80 backdrop-blur border-b border-gray-800 px-6 py-4 flex justify-between items-center">
-            <a href="/" class="text-cyan-400 font-semibold text-lg tracking-tight">
-                JobVerse
-            </a>
-            <div class="space-x-6">
-                <a href="/" class="text-gray-300 hover:text-white transition">Home</a>
-                <a href="/jobs" class="text-gray-300 hover:text-white transition">Jobs</a>
+    <!-- Navbar -->
+    <nav class="bg-white shadow-md">
+        <!-- Desktop Navigation -->
+        <div class="hidden md:block">
+            <div class="ml-10 flex items-baseline space-x-4">
+                <x-nav-link href="/" :active="request()->is('/')">Home</x-nav-link>
+                <x-nav-link href="/jobs" :active="request()->is('jobs')">Jobs</x-nav-link>
             </div>
-        </nav>
+        </div>
 
-        <!-- Page Content -->
-        <main class="flex-1 max-w-6xl mx-auto w-full px-6 py-10">
+        <!-- Mobile Navigation -->
+        <div class="md:hidden space-y-1 px-2 pb-3 pt-2">
+            <x-nav-link href="/" :active="request()->is('/')">Home</x-nav-link>
+            <x-nav-link href="/jobs" :active="request()->is('jobs')">Jobs</x-nav-link>
+            <x-nav-link href="/jobs/create" :active="request()->is('jobs/create')">Create Job</x-nav-link>
+
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="bg-indigo-600 py-10 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h1 class="text-3xl font-bold text-white">
+                {{ $heading }}
+            </h1>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="bg-white shadow-md rounded-lg p-6">
             {{ $slot }}
-        </main>
+        </div>
+    </main>
 
-        <!-- Footer -->
-        <footer class="px-6 py-8 text-center text-gray-500 border-t border-gray-800 text-sm">
-            &copy; {{ date('Y') }} JobVerse. All rights reserved.
-        </footer>
-    </div>
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-gray-300 py-6 mt-12">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p>&copy; {{ date('Y') }} MySite. All rights reserved.</p>
+        </div>
+    </footer>
+
 </body>
 </html>

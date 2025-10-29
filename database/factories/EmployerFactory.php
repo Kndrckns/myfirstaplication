@@ -9,16 +9,10 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class EmployerFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
-    // in EmployerFactory.php
-public function definition(): array
-{
-return [
-'name' => fake()->company(),
-];
-}
+    public function definition(): array
+    {
+        return [
+            'name' => fake()->company(),
+        ];
+    }
 }

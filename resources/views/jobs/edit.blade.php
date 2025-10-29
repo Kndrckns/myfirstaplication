@@ -1,61 +1,46 @@
-<x-layout>
-    <x-slot:heading>
-        Edit Job
-    </x-slot:heading>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Job</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f4f4; padding: 20px; }
+        a { text-decoration: none; color: #007BFF; margin-bottom: 10px; display: inline-block; }
+        form { background: #fff; padding: 20px; border-radius: 8px; width: 400px; }
+        label { display: block; margin-top: 10px; font-weight: bold; }
+        input { width: 100%; padding: 8px; margin-top: 5px; border-radius: 4px; border: 1px solid #ccc; }
+        button { margin-top: 15px; padding: 10px 20px; border: none; border-radius: 4px; background: #007BFF; color: #fff; cursor: pointer; }
+        .error-text { color:red; font-size: 14px; margin-top: 5px; }
+    </style>
+</head>
+<body>
 
-    <form method="POST" action="/jobs/{{ $job->id }}">
+    <h1>Edit Job</h1>
+    <a href="{{ route('jobs.index') }}">Back to Job Listings</a>
+
+    <form action="{{ route('jobs.update', $job->id) }}" method="POST">
         @csrf
-        @method('PATCH') <!-- method spoofing -->
+        @method('PUT')
 
-        <div class="space-y-12">
-            <div class="border-b border-gray-900/10 pb-12">
-                <h2 class="text-base font-semibold leading-7 text-gray-900">Edit Job</h2>
-                <p class="mt-1 text-sm leading-6 text-gray-600">Update job details below.</p>
+        <label for="title">Job Title:</label>
+        <input type="text" id="title" name="title" value="{{ old('title', $job->title) }}">
+        @error('title')
+            <div class="error-text">{{ $message }}</div>
+        @enderror
 
-                <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                    <!-- Title -->
-                    <div class="sm:col-span-4">
-                        <label for="title" class="block text-sm font-medium leading-6 text-gray-900">Title</label>
-                        <div class="mt-2">
-                            <input type="text" name="title" id="title" required
-                                   class="block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-600 sm:text-sm"
-                                   value="{{ old('title', $job->title) }}">
-                        </div>
-                        @error('title')
-                            <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p>
-                        @enderror
-                    </div>
+        <label for="company_name">Company Name:</label>
+        <input type="text" id="company_name" name="company_name" value="{{ old('company_name', $job->company_name) }}">
+        @error('company_name')
+            <div class="error-text">{{ $message }}</div>
+        @enderror
 
-                    <!-- Salary -->
-                    <div class="sm:col-span-4">
-                        <label for="salary" class="block text-sm font-medium leading-6 text-gray-900">Salary</label>
-                        <div class="mt-2">
-                            <input type="text" name="salary" id="salary" required
-                                   class="block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-600 sm:text-sm"
-                                   value="{{ old('salary', $job->salary) }}">
-                        </div>
-                        @error('salary')
-                            <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p>
-                        @enderror
-                    </div>
-                </div>
-            </div>
-        </div>
+        <label for="salary">Salary:</label>
+        <input type="text" id="salary" name="salary" value="{{ old('salary', $job->salary) }}">
+        @error('salary')
+            <div class="error-text">{{ $message }}</div>
+        @enderror
 
-        <div class="mt-6 flex items-center justify-end gap-x-6">
-            <a href="/jobs/{{ $job->id }}" class="text-sm font-semibold text-gray-900">Cancel</a>
-            <button type="submit" class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white hover:bg-indigo-500">
-                Update
-            </button>
-
-            <!-- Delete Button -->
-            <button form="delete-form" class="text-red-500">Delete</button>
-        </div>
+        <button type="submit">Update Job</button>
     </form>
 
-    <!-- Hidden Delete Form -->
-    <form method="POST" action="/jobs/{{ $job->id }}" id="delete-form" class="hidden">
-        @csrf
-        @method('DELETE')
-    </form>
-</x-layout>
+</body>
+</html>

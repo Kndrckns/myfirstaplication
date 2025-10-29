@@ -6,24 +6,20 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-   // in ..._create_tags_table.php
     public function up(): void
     {
-        Schema::create('tags', function (Blueprint $table) {
+        Schema::create('job_listings', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
+            $table->string('title');
+            $table->text('Company Name')->nullable();
+            $table->integer('salary')->nullable();
+            $table->foreignId('employer_id')->nullable(); // optional
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropIfExists('tags');
+        Schema::dropIfExists('job_listings');
     }
 };
